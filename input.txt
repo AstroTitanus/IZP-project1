@@ -1,0 +1,4 @@
+Head;Body;Legs
+Yes;2;4
+No;1;3
+Frick;2;1

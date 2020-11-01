@@ -72,6 +72,23 @@ char* irow(int r, int m, char parsedRows[][m]) {
 
 int main(int argc, char const *argv[]) {
 
+    char** editTable = {"irow", "arow", "drow", "drows", "icol", "acol", "dcol", "dcols"};
+
+    if (argc > 1) {
+
+        for (int i = 1; i < argc; i++) {
+            switch (argv[i]) {
+               case /* value */:
+           }
+        }
+
+
+
+    } else {
+        printf("Je treba zadat aspon jeden argument\n");
+        return 2;
+    }
+
     // char DELIM = ';';
     // int ROW_LENGTH = 120;
     //
@@ -84,7 +101,7 @@ int main(int argc, char const *argv[]) {
     // char parsedRows[][ROW_LENGTH];
     // parseRows(data, ROW_LENGTH, parsedRows);
 
-    printf("%d\n", argc);
+    printf("argc: %d\n", argc);
     printf("%s\n", argv[0]);
     printf("%s\n", argv[1]);
     printf("%s\n", argv[2]);

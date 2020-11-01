@@ -20,6 +20,7 @@ int howManyRows(char* data) {
     return rows;
 }
 
+
 int howManyCols(char* data) {
     int cols = 0;
     for (int i = 0; data[i] != '\n'; i++) {
@@ -30,41 +31,64 @@ int howManyCols(char* data) {
     return cols+1;
 }
 
-char** fillParsedData(char* data, char** parsedData) {
+
+void parseRows(char* data, int m, char parsedRows[][m]) {
     int row = 0;
-    int col = 0;
+    // int col = 0;
+    int index = 0;
 
     for (unsigned long i = 0; i < strlen(data); i++) {
-        if (i==0) {
-            parsedData[row][col] = data[i];
+        if (data[i] == '\n') {
+            row++;
+            index = 0;
         }
+        parsedRows[row][index] = data[i];
+        index++;
     }
 
-    return parsedData;
+    // char* ptr = &parsedRows[0][0];
+    // return ptr;
+}
+
+
+char* irow(int r, int m, char parsedRows[][m]) {
+
+    if (r>0) {
+        // int cols = howManyCols(parsedRows[0]);
+        // int rows = sizeof parsedRows / parsedRows[0];
+        // char parsedRowsUpdated[rows+1][m];
+
+
+
+        char* ptr = &parsedRows[0][0];
+        return ptr;
+    } else {
+        printf("ERROR: R must be bigger then 0\n");
+        return "ERROR";
+    }
 }
 
 
 
-int main() {
+int main(int argc, char const *argv[]) {
 
-    char data[200];
-    scanf("%[^\f]s",data);
-
-    int rows = howManyRows(data);
-    int cols = howManyCols(data);
-
-    char parsedData[rows+1][cols+1];
-    fillParsedData(data, parsedData);
-
-
-
-    // char ahoj[100];
-    // returnString(ahoj);
+    // char DELIM = ';';
+    // int ROW_LENGTH = 120;
     //
-    printf("%s\n", data);
-    printf("Rows: %d\n", rows);
-    printf("Cols: %d\n", cols);
-    printf("Parsed: %d\n", parsedData[0][0]);
+    // char data[200];
+    // scanf("%[^\f]s",data);
+    //
+    // int rows = howManyRows(data);
+    // // int cols = howManyCols(data);
+    //
+    // char parsedRows[][ROW_LENGTH];
+    // parseRows(data, ROW_LENGTH, parsedRows);
+
+    printf("%d\n", argc);
+    printf("%s\n", argv[0]);
+    printf("%s\n", argv[1]);
+    printf("%s\n", argv[2]);
+
 
     return 0;
 }

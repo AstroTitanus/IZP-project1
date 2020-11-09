@@ -57,19 +57,16 @@ char* irow(int r, int m, char parsedRows[][m]) {
 }
 
 
-int getArgumentCount(char* arg) {
-    if (atoi(arg) != 0) {
-        printf("Argument can't contain a number!\n");
-        return -1;
-    } else {
-        for (int i = 0; i < 32; i=i+2) {
-            if ( strcmp(arg, commands[i].name) == 0 ) {
-                printf("%s\n", commands[i+1].name);
-                return atoi(commands[i+1].name);
-            }
+command getCommandInfo(char* arg) {
+    for (int i = 0; i < knownCommandsCount; i++) {
+        if ( strcmp(arg, commands[i].name) == 0 ) {
+            // printf("%s\n", commands[i].name);
+            return commands[i];
         }
     }
-    return -1;
+    printf("Error in getCommandInfor(): Command not found\n");
+    command error = {"error", -1};
+    return error;
 }
 
 
@@ -83,4 +80,17 @@ int isOnlyDigits(char* string) {
         i++;
     }
     return 1;
+}
+
+
+int containsDigit(char* string) {
+    int i = 0;
+    while (string[i] != '\0') {
+        if (isdigit(string[i]) == 1) {
+            // printf("OBSAHUJE PISMENO\n");
+            return 1;
+        }
+        i++;
+    }
+    return 0;
 }

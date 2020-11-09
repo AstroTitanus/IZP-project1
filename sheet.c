@@ -3,8 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include "commands.h"
-#include "argParser.h"
 #include "helper.h"
+#include "argParser.h"
 
 // const char* returnString(char* ahoj){
 //     char x[100];
@@ -65,6 +65,7 @@ int main(int argc, char* argv[]) {
 
 
     printf("%d\n", argc);
+    // printf("%s\n", getCommandInfo("move").name);
     argvParser(argc, argv); //Treba dorobit overenie ci funkcia nevratila NULL
 
 

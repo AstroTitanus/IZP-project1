@@ -65,7 +65,6 @@ int main(int argc, char* argv[]) {
 
 
     printf("%d\n", argc);
-    // printf("%s\n", getCommandInfo("move").name);
     argvParser(argc, argv); //Treba dorobit overenie ci funkcia nevratila NULL
 
 
@@ -102,94 +101,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// getMode(argc, argv);
-//
-// if (argc > 1) {
-
-    // for (int i = 1; i < argc; i++) {
-        //     switch (argv[i]) {
-            //        case "irow":
-            //    }
-            // }
-
-
-
-            // } else {
-                //     printf("Je treba zadat aspon jeden argument\n");
-                //     return 2;
-                // }
-
-                // char DELIM = ';';
-                // int ROW_LENGTH = 120;
-                //
-                // char data[200];
-                // scanf("%[^\f]s",data);
-                //
-                // int rows = howManyRows(data);
-                // // int cols = howManyCols(data);
-                //
-                // char parsedRows[][ROW_LENGTH];
-                // parseRows(data, ROW_LENGTH, parsedRows);
-
-                // printf("argc: %d\n", argc);
-                // printf("%s\n", argv[0]);
-                // printf("%s\n", argv[1]);
-                // printf("%s\n", argv[2]);

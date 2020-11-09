@@ -1,6 +1,6 @@
 char** argvParser(int argc, char** argv) {
     int editTableArgs = 0;
-    // int editDataArgs = 0;
+    int editDataArgs = 0;
     int rowSelectionArgs = 0;
     int delim = 0;
 
@@ -35,14 +35,21 @@ char** argvParser(int argc, char** argv) {
 
             if ((i == 1 && delim == 0) || (i == 3 && delim == 1)) {
 
-                if ( argc > i+2 ) {
+                if ( argc > i + 2 ) {
 
-                    if ( isOnlyDigits(argv[i+1]) == 1 && isOnlyDigits(argv[i+2]) == 1 ) {
+                    if ( (isOnlyDigits(argv[i+1]) == 1 && isOnlyDigits(argv[i+2]) == 1) || (strcmp(argv[i+1], "-") == 0 && isOnlyDigits(argv[i+2]) == 1) || (isOnlyDigits(argv[i+1]) == 1 && strcmp(argv[i+2], "-") == 0) ) {
 
-                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
-                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
-                        i += 2;
-                        rowSelectionArgs++;
+                        if ( (atoi(argv[i+1]) > 0 && atoi(argv[i+2]) > 0) || (strcmp(argv[i+1], "-") == 0 && atoi(argv[i+2]) > 0) || (atoi(argv[i+1]) > 0 && strcmp(argv[i+2], "-") == 0) ) {
+
+                            // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                            printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                            i += 2;
+                            rowSelectionArgs++;
+
+                        } else {
+                            printf("Error: Both parameters for argument 'rows' must be numbers bigger than 0.\n");
+                            return NULL;
+                        }
 
                     } else {
                         printf("Error: Both parameters for argument 'rows' must be numbers.\n");
@@ -56,6 +63,7 @@ char** argvParser(int argc, char** argv) {
 
             } else {
                 printf("Error: wrong position of 'rows' argument\n");
+                return NULL;
             }
         }
 
@@ -65,9 +73,9 @@ char** argvParser(int argc, char** argv) {
 
             if ((i == 1 && delim == 0) || (i == 3 && delim == 1)) {
 
-                if ( argc > i+2 ) {
+                if ( argc > i + 2 ) {
 
-                    if ( isOnlyDigits(argv[i+1]) == 1 ) {
+                    if ( isOnlyDigits(argv[i+1]) == 1 && atoi(argv[i+1]) > 0 ) {
 
                         // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
                         printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
@@ -75,7 +83,7 @@ char** argvParser(int argc, char** argv) {
                         rowSelectionArgs++;
 
                     } else {
-                        printf("Error: First parameter for argument 'beginswith' must be a number.\n");
+                        printf("Error: First parameter for argument 'beginswith' must be a number bigger than 0.\n");
                         return NULL;
                     }
 
@@ -86,6 +94,7 @@ char** argvParser(int argc, char** argv) {
 
             } else {
                 printf("Error: wrong position of 'beginswith' argument\n");
+                return NULL;
             }
         }
 
@@ -95,9 +104,9 @@ char** argvParser(int argc, char** argv) {
 
             if ((i == 1 && delim == 0) || (i == 3 && delim == 1)) {
 
-                if ( argc > i+2 ) {
+                if ( argc > i + 2 ) {
 
-                    if ( isOnlyDigits(argv[i+1]) == 1 ) {
+                    if ( isOnlyDigits(argv[i+1]) == 1 && atoi(argv[i+1]) > 0 ) {
 
                         // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
                         printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
@@ -105,7 +114,7 @@ char** argvParser(int argc, char** argv) {
                         rowSelectionArgs++;
 
                     } else {
-                        printf("Error: First parameter for argument 'contains' must be a number.\n");
+                        printf("Error: First parameter for argument 'contains' must be a number bigger than 0.\n");
                         return NULL;
                     }
 
@@ -116,6 +125,7 @@ char** argvParser(int argc, char** argv) {
 
             } else {
                 printf("Error: wrong position of 'contains' argument\n");
+                return NULL;
             }
         }
 
@@ -149,7 +159,6 @@ char** argvParser(int argc, char** argv) {
                 printf("Error: Not enough parameters for argument 'irow'.\n");
                 return NULL;
             }
-
         }
 
     // -------------------------------------------------------------------------------------------------------------
@@ -167,79 +176,421 @@ char** argvParser(int argc, char** argv) {
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "drow") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editTableArgs++;
+
+                    } else {
+                        printf("Error: Parameter for argument 'drow' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Parameter for argument 'drow' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'drow'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "drows") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 && isOnlyDigits(argv[i+2]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editTableArgs++;
+
+                    } else {
+                        printf("Error: Both parameters for argument 'drows' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Both parameters for argument 'drows' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'drows'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "icol") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editTableArgs++;
+
+                    } else {
+                        printf("Error: Parameter for argument 'icol' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Parameter for argument 'icol' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'icol'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "acol") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+            printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+            i += paramCount;
+            editTableArgs++;
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "dcol") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editTableArgs++;
+
+                    } else {
+                        printf("Error: Parameter for argument 'dcol' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Parameter for argument 'dcol' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'dcol'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "dcols") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 && isOnlyDigits(argv[i+2]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editTableArgs++;
+
+                    } else {
+                        printf("Error: Both parameter for argument 'dcols' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Both parameter for argument 'dcols' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'dcols'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
-        else if (strcmp(argv[i], "tolower") == 0) {
+        else if (strcmp(argv[i], "cset") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+                if ( argc > i + paramCount ) {
+
+                    if ( isOnlyDigits(argv[i+1]) == 1 && atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += 2;
+                        editDataArgs++;
+
+                    } else {
+                        printf("Error: First parameter for argument 'cset' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Not enough parameters for argument 'cset'.\n");
+                    return NULL;
+                }
+            }
+
+    // -------------------------------------------------------------------------------------------------------------
+
+        else if (strcmp(argv[i], "tolower") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
+
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editDataArgs++;
+
+                    } else {
+                        printf("Error: Parameter for argument 'tolower' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Parameter for argument 'tolower' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'tolower'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "toupper") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editDataArgs++;
+
+                    } else {
+                        printf("Error: Parameter for argument 'toupper' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Parameter for argument 'toupper' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'toupper'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "round") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editDataArgs++;
+
+                    } else {
+                        printf("Error: Parameter for argument 'round' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Parameter for argument 'round' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'round'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "int") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editDataArgs++;
+
+                    } else {
+                        printf("Error: Parameter for argument 'int' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Parameter for argument 'int' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'int'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "copy") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 && isOnlyDigits(argv[i+2]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editDataArgs++;
+
+                    } else {
+                        printf("Error: Both parameter for argument 'copy' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Both parameter for argument 'copy' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'copy'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "swap") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 && isOnlyDigits(argv[i+2]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editDataArgs++;
+
+                    } else {
+                        printf("Error: Both parameter for argument 'swap' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Both parameter for argument 'swap' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'swap'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
 
         else if (strcmp(argv[i], "move") == 0) {
+            int paramCount = getCommandInfo(argv[i]).paramCount;
 
+            if ( argc > i + paramCount ) {
+
+                if ( isOnlyDigits(argv[i+1]) == 1 && isOnlyDigits(argv[i+2]) == 1 ) {
+
+                    if ( atoi(argv[i+1]) > 0 ) {
+
+                        // SUCCESS - ARGUMENT JE OVERENY, SEM PRIDE KOD CO SA STANE POTOM
+                        printf("SUCCESSFULY PARSED '%s'\n", argv[i]); //DEBUG
+                        i += paramCount;
+                        editDataArgs++;
+
+                    } else {
+                        printf("Error: Both parameter for argument 'move' must be a number bigger than 0.\n");
+                        return NULL;
+                    }
+
+                } else {
+                    printf("Error: Both parameter for argument 'move' must be a number bigger than 0.\n");
+                    return NULL;
+                }
+
+            } else {
+                printf("Error: Not enough parameters for argument 'move'.\n");
+                return NULL;
+            }
         }
 
     // -------------------------------------------------------------------------------------------------------------
@@ -251,6 +602,6 @@ char** argvParser(int argc, char** argv) {
 
     }
 
-    return NULL;
+    return NULL; // IDEA - daj do commands pola aj -d, rows, ... , a vratis pole struct commandov ktrore sa maju vykonat aj s argumentami
 
 }

@@ -1,0 +1,16 @@
+can use:
+fgets
+
+
+resources:
+https://www.tutorialspoint.com/c_standard_library/ctype_h.htm
+
+tips:
+Max 100 arugmentov.
+Nacitaj si data po riadkoch a rob na nich operacie co treba. Potom ich rovno vyhod do stdout.
+Parsovanie argumentov sprav ako for vo switchi.
+Funkcia na parsovanie rowu musi obsahovat overenie ci nahodou niektory z itemov nie je dlhsi ako 100 znakov.
+
+
+
+1. overit ci je spravny pocet argumentov

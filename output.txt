@@ -1,0 +1,7 @@
+1,Head,Body,Legs,Shoulders,Pypyk
+2,Yes,2,3,4,5
+3,No,2,3,4,5
+4,Yes,2,3,4,5
+5,No,2,3,4,5
+6,Yes,2,3,4,5
+7,No,2,3,4,5
